@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="userRealm"/>
+    </bean>
+    
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login.html"/>
+        <property name="unauthorizedUrl" value="/login.html"/>
+        <property name="filterChainDefinitions">
+            <value>
+                /login = anon
+                /login.html = anon
+                /sys/login = anon
+                /favicon.ico = anon
+                /captcha.jpg = anon
+                /** = authc
+            </value>
+        </property>
+    </bean>
+
+</beans>

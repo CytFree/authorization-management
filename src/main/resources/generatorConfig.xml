@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+    <classPathEntry location="/Users/cyt19930705/.m2/repository/mysql/mysql-connector-java/5.1.38/mysql-connector-java-5.1.38.jar"/>
+
+    <context id="context" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection
+                userId="root"
+                password="123456"
+                driverClass="com.mysql.jdbc.Driver"
+                connectionURL="jdbc:mysql://127.0.0.1:3306/auth-manage"/>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.cyt.auth.manage.dto.pojo"
+                            targetProject="/Users/cyt19930705/Documents/java demo/renren-security/authorization-management/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="com.cyt.auth.manage.dto.pojo.BasePoJo"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="sqlMap.system"
+                         targetProject="/Users/cyt19930705/Documents/java demo/renren-security/authorization-management/src/main/resources">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator targetPackage="com.cyt.auth.manage.dao" type="XMLMAPPER"
+                             targetProject="/Users/cyt19930705/Documents/java demo/renren-security/authorization-management/src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+        <table tableName="sys_user" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sys_dept" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sys_menu" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sys_role" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sys_role_dept" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sys_role_menu" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+        <table tableName="sys_user_role" enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false"/>
+    </context>
+</generatorConfiguration>

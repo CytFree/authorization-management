@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:contenx="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-4.2.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+    <!-- 注解事物开启 -->
+    <tx:annotation-driven/>
+    <contenx:property-placeholder location="jdbc.properties"/>
+
+    <!-- 配置数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+          init-method="init" destroy-method="close">
+        <property name="url" value="${auth.manage.jdbc.url}"/>
+        <property name="password" value="${auth.manage.jdbc.password}"/>
+        <property name="username" value="${auth.manage.jdbc.username}"/>
+        <property name="initialSize" value="${jdbc.initialSize}"/>
+        <property name="maxActive" value="${jdbc.maxActive}"/>
+        <!-- 配置监控统计拦截的filters -->
+        <property name="proxyFilters">
+            <list>
+                <ref bean="statFilter"/>
+                <ref bean="wallFilter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置监控统计拦截的filters -->
+    <bean id="statFilter" class="com.alibaba.druid.filter.stat.StatFilter">
+        <property name="logSlowSql" value="true"/>
+        <property name="mergeSql" value="true"/>
+        <property name="slowSqlMillis" value="1000"/>
+    </bean>
+    <bean class="com.alibaba.druid.wall.WallFilter" id="wallFilter">
+        <property name="dbType" value="mysql"/>
+        <property name="config" ref="wallConfig"/>
+    </bean>
+
+    <bean id="wallConfig" class="com.alibaba.druid.wall.WallConfig">
+        <property name="multiStatementAllow" value="true"/>
+    </bean>
+
+    <!--定义通知 即：advice-->
+    <bean class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor" id="druidStatInterceptor"></bean>
+   <!--定义切点-->
+    <bean class="org.springframework.aop.support.JdkRegexpMethodPointcut" id="regexpMethodPointcut" scope="prototype">
+        <property name="patterns">
+            <list>
+                <value>com.cyt.auth.manage.controller.*</value>
+                <value>com.cyt.auth.manage.service.*</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--定义切面advisor（切点 + 通知）-->
+   <aop:config>
+       <aop:advisor advice-ref="druidStatInterceptor" pointcut-ref="regexpMethodPointcut"/>
+   </aop:config>
+
+    <!-- 事物管理 -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+    </bean>
+
+    <!-- mybatis sqlSession工厂 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:sqlMap/**/*.xml"/>
+        <property name="configLocation" value="classpath:mybatisConfig.xml"/>
+    </bean>
+
+    <!-- mapper(即dao类)自动扫描 -->
+    <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.cyt.auth.manage.dao"/>
+    </bean>
+
+</beans>
