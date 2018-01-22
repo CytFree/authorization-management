@@ -1,6 +1,9 @@
 package com.cyt.auth.manage.dao;
 
 import com.cyt.auth.manage.dto.pojo.SysMenu;
+import com.cyt.auth.manage.dto.vo.SysMenuVO;
+
+import java.util.List;
 
 public interface SysMenuMapper {
     /**
@@ -50,4 +53,18 @@ public interface SysMenuMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(SysMenu record);
+
+    /**
+     * 查询所有菜单
+     * @return
+     */
+    List<SysMenuVO> queryAllList();
+
+    /**
+     * 查询用户拥有权限的菜单
+     *
+     * @param userId
+     * @return
+     */
+    List<SysMenuVO> queryListByUserId(Long userId);
 }
