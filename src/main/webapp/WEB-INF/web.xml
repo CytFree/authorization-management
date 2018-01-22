@@ -12,7 +12,8 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>
       classpath:spring-jdbc.xml
-      classpath:spring-shiro.xml
+        classpath:spring-redis.xml
+        classpath:spring-shiro.xml
       classpath:spring-mvc.xml
     </param-value>
   </context-param>
