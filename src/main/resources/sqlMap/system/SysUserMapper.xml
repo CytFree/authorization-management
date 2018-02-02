@@ -170,4 +170,12 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
+
+    <!--根据用户名查询用户信息-->
+    <select id="queryByUserName" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM sys_user
+        WHERE username = #{userName, jdbcType=VARCHAR}
+    </select>
 </mapper>

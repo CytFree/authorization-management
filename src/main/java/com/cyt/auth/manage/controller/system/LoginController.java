@@ -1,5 +1,6 @@
 package com.cyt.auth.manage.controller.system;
 
+import com.cyt.auth.manage.common.constant.ImageConstants;
 import com.cyt.auth.manage.common.exception.BizServiceException;
 import com.cyt.auth.manage.common.util.WebResponse;
 import com.cyt.auth.manage.controller.BaseController;
@@ -47,7 +48,7 @@ public class LoginController extends BaseController {
         //将文字保存到session中
         ShiroUtils.setSessionAttribute(Constants.KAPTCHA_SESSION_KEY, text);
 
-        ImageIO.write(image, "jpg", response.getOutputStream());
+        ImageIO.write(image, ImageConstants.JPG, response.getOutputStream());
     }
 
     /**
