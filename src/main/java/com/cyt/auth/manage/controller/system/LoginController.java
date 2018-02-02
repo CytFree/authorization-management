@@ -96,6 +96,6 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "logout")
     public String logout(){
         ShiroUtils.logout();
-        return "login";
+        return "redirect:login.html";
     }
 }

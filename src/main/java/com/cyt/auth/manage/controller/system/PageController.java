@@ -16,17 +16,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController  extends BaseController {
     @RequestMapping("{url}.html")
     public String login(@PathVariable("url") String url){
-        return url;
+        return url + ".html";
     }
 
     @RequestMapping("{module}/{url}.html")
     public String login(@PathVariable("module") String module,
             @PathVariable("url") String url){
-        return module + "/" + url;
+        return module + "/" + url + ".html";
     }
 
     @RequestMapping("/")
     public String index() {
-        return "index";
+        return "index.html";
     }
 }
