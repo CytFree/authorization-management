@@ -81,7 +81,7 @@
 			captcha: '',
 			error: false,
 			errorMsg: '',
-			src: 'captcha.jpg'
+			src: 'verificationCode.jpg'
 		},
 		beforeCreate: function(){
 			if(self != top){
@@ -90,7 +90,7 @@
 		},
 		methods: {
 			refreshCode: function(){
-				this.src = "captcha.jpg?t=" + $.now();
+				this.src = "verificationCode.jpg?t=" + $.now();
 			},
 			login: function (event) {
 				var data = "userName="+vm.username+"&password="+vm.password+"&verificationCode="+vm.captcha;
